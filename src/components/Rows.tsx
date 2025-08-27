@@ -2,7 +2,8 @@ import styled from "styled-components";
 import type { DayCode } from "../utils/date";
 import { TIME_STEP, STARTING_TIME, DAY_TIME } from "../constants";
 import Lesson from "./Lesson";
-import { getDayLessons } from "../utils/dayLessons";
+import EmptyLesson from "./EmptyLesson";
+import { getDayLessons, pairTimes } from "../utils/dayLessons";
 
 const HOURS_COL = 84; // px
 
@@ -36,6 +37,7 @@ type Props = {
 };
 
 const MIN_PER_DAY = 24 * 60;
+const HOUR_SPAN = 60 / TIME_STEP; // 12
 
 function toHHMM(min: number) {
   const n = ((min % MIN_PER_DAY) + MIN_PER_DAY) % MIN_PER_DAY;
@@ -47,47 +49,69 @@ function toHHMM(min: number) {
 export default function Rows({ day, group, weekType }: Props) {
   const totalRows = Math.max(1, Math.ceil(DAY_TIME / TIME_STEP));
 
+  // 1) годинні підписи (ліва колонка)
   const hourCells = [];
-  const HOUR_SPAN = 60 / TIME_STEP;
-
   for (let t = STARTING_TIME; t < STARTING_TIME + DAY_TIME; t += 60) {
-    const relStart = Math.floor((t - STARTING_TIME) / TIME_STEP);
-    const gridStart = relStart + 1;
+    const relStart = Math.floor((t - STARTING_TIME) / TIME_STEP); // 0-based
+    const gridStart = relStart + 1; // 1-based
     const span = Math.min(HOUR_SPAN, totalRows - relStart);
-    const label = `${toHHMM(t)} - ${toHHMM(t + 60)}`;
-
     hourCells.push(
       <HourCell
         key={`hour-${t}`}
         style={{ gridRow: `${gridStart} / span ${span}` }}
       >
-        {label}
+        {toHHMM(t)} - {toHHMM(t + 60)}
       </HourCell>
     );
   }
-  const lessons = getDayLessons(day, group, weekType);
-  const lessonCells = lessons.map((l) => {
+
+  // 2) нормалізовані заняття
+  const lessons = getDayLessons(day, group, weekType); // [{pair, startMin, endMin, ...}]
+  const byPair = new Map<number, (typeof lessons)[number]>();
+  for (const l of lessons) byPair.set(l.pair, l);
+
+  // 3) повний список пар, які хочемо показувати
+  const ALL_PAIRS = [1, 2, 3, 4, 5, 6, 7];
+
+  // 4) для кожної пари рахуємо позицію (за фіксованим часом pairTimes)
+  const cells = ALL_PAIRS.map((pair) => {
+    const { startMin, endMin, label } = pairTimes(pair); // час пари
+
+    // позиція від 08:00
     const delta =
-      (((l.startMin - STARTING_TIME) % MIN_PER_DAY) + MIN_PER_DAY) %
-      MIN_PER_DAY;
-
-    const startIndex = Math.max(0, Math.floor(delta / TIME_STEP));
-    const span = Math.max(1, Math.round((l.endMin - l.startMin) / TIME_STEP));
-
-    const gridStart = Math.min(startIndex + 1, totalRows);
+      (((startMin - STARTING_TIME) % MIN_PER_DAY) + MIN_PER_DAY) % MIN_PER_DAY;
+    const startIndex = Math.max(0, Math.floor(delta / TIME_STEP)); // 0-based
+    const span = Math.max(1, Math.round((endMin - startMin) / TIME_STEP));
+    const gridStart = Math.min(startIndex + 1, totalRows); // 1-based
     const gridSpan = Math.min(span, Math.max(1, totalRows - startIndex));
 
+    const found = byPair.get(pair);
+    if (found) {
+      return (
+        <Lesson
+          key={`pair-${pair}`}
+          style={{
+            gridColumn: "2",
+            gridRow: `${gridStart} / span ${gridSpan}`,
+          }}
+          classNum={found.class}
+          corps={found.corps}
+          type={found.type}
+          teacherPhoto={found.photo}
+          name={found.title}
+          teacher={found.teacher}
+          time={found.label} // з нормалізованих (можеш і label з pairTimes поставити)
+        />
+      );
+    }
+
+    // якщо заняття немає — рендеримо заглушку
     return (
-      <Lesson
-        key={`${day}-${l.pair}-${group}`}
+      <EmptyLesson
+        key={`pair-${pair}`}
+        pair={pair}
+        time={label}
         style={{ gridColumn: "2", gridRow: `${gridStart} / span ${gridSpan}` }}
-        classNum={l.class}
-        corps={l.corps}
-        type={l.type}
-        teacherPhoto={l.photo}
-        name={l.title}
-        teacher={l.teacher}
-        time={l.label}
       />
     );
   });
@@ -95,7 +119,7 @@ export default function Rows({ day, group, weekType }: Props) {
   return (
     <Grid $rows={totalRows}>
       {hourCells}
-      {lessonCells}
+      {cells}
     </Grid>
   );
 }
