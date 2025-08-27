@@ -13,8 +13,8 @@ type Props = {
 };
 
 const TYPE_LABELS: Record<string, string> = {
-  lab: "Лабораторна",
-  practice: "Практична",
+  lab: "Лабка",
+  practice: "Практ",
   lection: "Лекція",
 };
 
@@ -46,7 +46,7 @@ const Wrap = styled.div`
   color: var(--text);
   padding: 4px;
   display: grid;
-  grid-template-columns: 86px 1fr; /* ліва колонка під фото/викладача */
+  grid-template-columns: 86px 1fr;
   column-gap: 10px;
   align-items: stretch;
   overflow: hidden;
@@ -81,14 +81,12 @@ const Teacher = styled.div`
   margin-top: 6px;
   font-size: 11px;
   color: var(--muted);
-  line-height: 1.2;
   text-wrap: balance;
 `;
 
 const RightCol = styled.div`
   display: grid;
-  grid-template-rows: auto auto;
-  row-gap: 6px;
+  grid-template-rows: 1fr;
   min-width: 0;
 `;
 
@@ -96,7 +94,6 @@ const RightCol = styled.div`
 const Title = styled.div`
   font-size: 13px;
   font-weight: 600;
-  line-height: 1.25;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -105,8 +102,9 @@ const Title = styled.div`
 /* Рядок мети: бейдж типу, час, аудиторія */
 const MetaRow = styled.div`
   display: flex;
-  align-items: center;
-  gap: 4px;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-between;
   min-width: 0;
   flex-wrap: wrap; /* на дуже вузьких екранах переносимося */
 `;
@@ -127,7 +125,7 @@ const Badge = styled.span<{ $kind: string }>`
   border-radius: 999px;
   padding: 2px 8px;
   font-size: 11px;
-  line-height: 1.4;
+  line-height: 1.2;
   white-space: nowrap;
 `;
 
@@ -137,15 +135,6 @@ const Meta = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-`;
-
-const Dot = styled.span`
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: var(--muted);
-  opacity: 0.6;
-  display: inline-block;
 `;
 
 function initials(full?: string) {
@@ -201,12 +190,10 @@ export default function Lesson({
       </LeftCol>
 
       <RightCol>
-        <Title title={name}>{name}</Title>
-
         <MetaRow>
+          <Title title={name}>{name}</Title>
           {typeLabel && <Badge $kind={typeKey}>{typeLabel}</Badge>}
           {time && <Meta>{time}</Meta>}
-          {time && room && <Dot />}
           {room && <Meta>{room}</Meta>}
         </MetaRow>
       </RightCol>

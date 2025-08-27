@@ -4,14 +4,14 @@ import { TIME_STEP, STARTING_TIME, DAY_TIME } from "../constants";
 import Lesson from "./Lesson";
 import { getDayLessons } from "../utils/dayLessons";
 
-const HOURS_COL = 96; // px
+const HOURS_COL = 80; // px
 
 const Grid = styled.div<{ $rows: number }>`
   position: relative;
   display: grid;
   grid-template-columns: ${HOURS_COL}px 1fr; /* години | уроки */
   grid-template-rows: repeat(${({ $rows }) => $rows}, minmax(0, 1fr));
-  column-gap: 8px;
+  column-gap: 6px;
   row-gap: 2px;
   height: 100%;
   width: 100%;
