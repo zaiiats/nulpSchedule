@@ -44,7 +44,7 @@ const Wrap = styled.div`
   border: 1px solid var(--border);
   border-radius: 12px;
   color: var(--text);
-  padding: 8px;
+  padding: 4px;
   display: grid;
   grid-template-columns: 86px 1fr; /* ліва колонка під фото/викладача */
   column-gap: 10px;
@@ -69,7 +69,7 @@ const LeftCol = styled.div`
 
 const Photo = styled.div<{ $src?: string }>`
   flex: 0 0 75%;
-  min-height: 52px; /* щоб не колапсилося на малих картах */
+  height: calc(75% - 8px);
   border-radius: 10px;
   background: ${({ $src }) =>
     $src ? `center/cover no-repeat url(${$src})` : "var(--surface)"};
