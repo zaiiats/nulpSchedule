@@ -4,7 +4,7 @@ import { TIME_STEP, STARTING_TIME, DAY_TIME } from "../constants";
 import Lesson from "./Lesson";
 import { getDayLessons } from "../utils/dayLessons";
 
-const HOURS_COL = 80; // px
+const HOURS_COL = 84; // px
 
 const Grid = styled.div<{ $rows: number }>`
   position: relative;

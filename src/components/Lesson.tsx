@@ -81,7 +81,7 @@ const Teacher = styled.div`
   margin-top: 6px;
   font-size: 11px;
   color: var(--muted);
-  text-wrap: balance;
+  white-space: normal;
 `;
 
 const RightCol = styled.div`
