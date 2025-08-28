@@ -65,15 +65,18 @@ const Btn = styled.button<{ disabled?: boolean }>`
 `;
 
 const Label = styled.div`
+  text-align: center;
   font-size: 14px;
   white-space: nowrap;
   color: var(--text);
   display: flex;
   align-items: center;
   gap: 8px;
+  width: 240px;
 `;
 
 const Badge = styled.span`
+  text-align: center;
   display: inline-block;
   padding: 2px 8px;
   border-radius: 999px;
@@ -82,6 +85,7 @@ const Badge = styled.span`
   color: var(--text);
   font-size: 12px;
   line-height: 1.6;
+  width: 90px;
 `;
 
 export default function TimeConfiguration({
@@ -119,7 +123,9 @@ export default function TimeConfiguration({
         </Btn>
         <Label>
           <Badge>{typeOfWeek}</Badge>
-          {fmtDayMonth(from)} — {fmtDayMonth(to)}
+          <span style={{ width: "100%", textAlign: "center" }}>
+            {fmtDayMonth(from)} — {fmtDayMonth(to)}
+          </span>
         </Label>
         <Btn
           onClick={goNext}
