@@ -5,6 +5,7 @@ const LeftCol = styled.div`
   flex-direction: column;
   height: 100%;
   min-height: 0;
+  justify-content: space-evenly;
 `;
 
 const Photo = styled.div<{ $src?: string }>`
@@ -18,7 +19,6 @@ const Photo = styled.div<{ $src?: string }>`
 
 const Teacher = styled.div`
   text-align: center;
-  margin-top: 2px;
   font-size: 11px;
   color: var(--muted);
   white-space: normal;

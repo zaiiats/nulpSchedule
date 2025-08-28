@@ -19,7 +19,7 @@ const Wrap = styled.div`
   flex-direction: column;
   align-items: start;
   min-width: 0;
-  gap: 4px;
+  justify-content: space-evenly;
 `;
 
 export default function MetaInfo({
