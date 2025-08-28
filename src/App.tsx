@@ -1,16 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import GroupConfiguration from "./components/GroupConfiguration";
-import TimeConfiguration from "./components/TimeConfiguration";
-import {
-  START_DATE,
-  END_DATE,
-  startOfISOWeek,
-  addDays,
-  clampDate
-} from "./utils/date";
+import GroupConfiguration from "./components/confs/GroupConfiguration";
+import TimeConfiguration from "./components/confs/TimeConfiguration";
+import { startOfISOWeek, addDays, clampDate } from "./utils/date";
 import { bindHotkeys } from "./utils/hotkeys";
 import Main from "./components/Main";
 import "./App.css";
+import { END_DATE, START_DATE } from "./constants";
+import LessonProvider from "./providers/LessonProvider";
 
 export default function App() {
   const [group, setGroup] = useState<0 | 1>(() => {
@@ -48,8 +44,9 @@ export default function App() {
     });
     return dispose;
   }, [currentWeek]);
+
   return (
-    <>
+    <LessonProvider>
       <GroupConfiguration group={group} setGroup={setGroup} />
       <TimeConfiguration
         currentWeek={currentWeek}
@@ -57,9 +54,7 @@ export default function App() {
         start={START_DATE}
         end={END_DATE}
       />
-      <div>
-        <Main group={group} currentWeek={currentWeek} />
-      </div>
-    </>
+      <Main group={group} currentWeek={currentWeek} />
+    </LessonProvider>
   );
 }

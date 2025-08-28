@@ -5,7 +5,7 @@ import {
   fmtDayMonth,
   getWeekType,
   startOfISOWeek,
-} from "../utils/date";
+} from "../../utils/date";
 
 type Props = {
   currentWeek: Date;

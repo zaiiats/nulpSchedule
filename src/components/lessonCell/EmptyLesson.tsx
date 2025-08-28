@@ -21,8 +21,8 @@ type Props = {
 
 export default function EmptyLesson({ pair, time, style }: Props) {
   return (
-    <Box style={style} title={time}>
-      {pair}
+    <Box style={style} title={"Нема пари"}>
+      {pair} пара - {time}
     </Box>
   );
 }

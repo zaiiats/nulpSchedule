@@ -84,7 +84,9 @@ Dark theme tokens
   --success: #22c55e;
   --warning: #f59e0b;
   --danger: #ef4444;
+  --danger-2: #300c0c;
   --border: #293241;
+  --border-danger: #731c1c;
   --ring: rgba(59, 130, 246, 0.45);
 
   /* Shadows & radii */

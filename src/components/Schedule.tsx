@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import type { DayCode } from "../utils/date";
-import Rows from "./Rows";
+import Rows from "./schedule/Rows";
 
 const StyledWrapper = styled.div`
   background: var(--surface);
@@ -10,7 +10,7 @@ const StyledWrapper = styled.div`
   padding: 6px;
   display: flex;
   flex-direction: column;
-  gap: 6px; /* трохи повітря між хедером і грідом */
+  gap: 6px;
   height: calc(100dvh - 16px);
   min-height: 800px;
   width: 100%;
@@ -22,6 +22,7 @@ const Header = styled.div`
   justify-content: space-between;
   color: var(--text);
   font-size: 14px;
+  padding: 0 12px;
 `;
 
 const Title = styled.div`
@@ -41,6 +42,7 @@ type ScheduleProps = {
 };
 
 export default function Schedule({
+  date,
   day,
   group,
   weekType,
@@ -53,7 +55,7 @@ export default function Schedule({
         <Meta>{String(weekType)}</Meta>
       </Header>
 
-      <Rows day={day} group={group} weekType={weekType} />
+      <Rows date={date} day={day} group={group} weekType={weekType} />
     </StyledWrapper>
   );
 }
