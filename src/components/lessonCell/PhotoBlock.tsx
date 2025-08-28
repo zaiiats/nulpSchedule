@@ -18,7 +18,7 @@ const Photo = styled.div<{ $src?: string }>`
 
 const Teacher = styled.div`
   text-align: center;
-  margin-top: 6px;
+  margin-top: 2px;
   font-size: 11px;
   color: var(--muted);
   white-space: normal;
