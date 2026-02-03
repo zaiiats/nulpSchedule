@@ -7,38 +7,34 @@ const StyledWrapper = styled.div`
   border: 1px solid var(--border);
   border-radius: 12px;
   box-shadow: var(--shadow-md);
-  padding: 6px;
+  padding: 4px;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  height: calc(100dvh - 16px);
-  min-height: 800px;
+  height: 1000px;
   width: 100%;
 `;
 
 const Header = styled.div`
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
   color: var(--text);
   font-size: 14px;
-  padding: 0 12px;
+  padding-top: 6px;
 `;
 
 const Title = styled.div`
   font-weight: 600;
-`;
-const Meta = styled.div`
-  color: var(--muted);
-  font-size: 12px;
 `;
 
 type ScheduleProps = {
   day: DayCode;
   group: 0 | 1;
   weekType: string | number;
-  label: string; // «Середа, 23»
-  date: Date; // якщо знадобиться точна дата
+  label: string;
+  date: Date;
+  classGroup: string;
 };
 
 export default function Schedule({
@@ -47,15 +43,21 @@ export default function Schedule({
   group,
   weekType,
   label,
+  classGroup,
 }: ScheduleProps) {
   return (
     <StyledWrapper>
       <Header>
         <Title>{label}</Title>
-        <Meta>{String(weekType)}</Meta>
       </Header>
 
-      <Rows date={date} day={day} group={group} weekType={weekType} />
+      <Rows
+        classGroup={classGroup}
+        date={date}
+        day={day}
+        group={group}
+        weekType={weekType}
+      />
     </StyledWrapper>
   );
 }

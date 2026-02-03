@@ -21,7 +21,10 @@ const Teacher = styled.div`
   text-align: center;
   font-size: 11px;
   color: var(--muted);
-  white-space: normal;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  width: 100%;
 `;
 
 function initials(full?: string) {

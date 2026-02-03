@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { DayCode } from "./date";
-import { lessonsData } from "../utils/lessonsData";
+import { lessonsData } from "../constants";
 
 export const DAY_START_MIN = 8 * 60 + 30;
 export const LESSON_MIN = 80;
@@ -27,69 +26,117 @@ export function getWeekRowIndex(weekType: string | number): 0 | 1 {
   return 0;
 }
 
-function toHHMM(totalMin: number): string {
-  const h = Math.floor(totalMin / 60);
-  const m = totalMin % 60;
-  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
-}
+import {
+  teachers,
+  lessonsNames,
+  type Lesson,
+  type Format,
+  type DayOfWeek,
+} from "../constants";
 
-/** час пари у хвилинах від початку доби */
-export function pairTimes(pair: number) {
-  // якщо у тебе пари стартують з "2", формула (pair-1)
-  const startMin = DAY_START_MIN + (LESSON_MIN + BREAK_MIN) * (pair - 1);
-  const endMin = startMin + LESSON_MIN;
-  return { startMin, endMin, label: `${toHHMM(startMin)} — ${toHHMM(endMin)}` };
-}
+const isLessonVisible = (
+  format: Format,
+  userGroup: 0 | 1,
+  isNumerator: boolean,
+): boolean => {
+  switch (format) {
+    case "full":
+      return true;
+    case "top":
+      return isNumerator;
+    case "bottom":
+      return !isNumerator;
 
-/** головна утиліта: повертає нормалізований список занять на день */
+    case "left":
+      return userGroup === 0;
+    case "right":
+      return userGroup === 1;
+
+    case "topLeft":
+      return userGroup === 0 && isNumerator;
+    case "bottomLeft":
+      return userGroup === 0 && !isNumerator;
+
+    case "topRight":
+      return userGroup === 1 && isNumerator;
+    case "bottomRight":
+      return userGroup === 1 && !isNumerator;
+
+    default:
+      return false;
+  }
+};
+
 export function getDayLessons(
-  day: DayCode,
+  classGroup: "305" | "306" | "307",
+  day: DayOfWeek,
   group: 0 | 1,
-  weekType: string | number
-): NormalizedLesson[] {
+  weekType: string | number,
+) {
+  const groupData = lessonsData[classGroup];
+  if (!groupData) return [];
+
+  const daySchedule = groupData[day];
+  if (!daySchedule) return [];
+
   const rowIdx = getWeekRowIndex(weekType);
-  const dayObj = (lessonsData as any)?.[day] as Record<string, any> | undefined;
-  if (!dayObj) return [];
+  const isNumerator = rowIdx === 0;
 
-  const out: NormalizedLesson[] = [];
+  const out: any[] = [];
 
-  // перебираємо всі пари, що є у дня
-  for (const k of Object.keys(dayObj)) {
-    const pair = Number(k);
+  for (const [pairStr, data] of Object.entries(daySchedule)) {
+    const pair = Number(pairStr);
     if (!Number.isFinite(pair)) continue;
 
-    const slot = dayObj[pair] as any[][]; // [[Cell,Cell],[Cell,Cell]]
-    const cell = slot?.[rowIdx]?.[group]; // потрібна клітинка
+    const lessonsList: Lesson[] = Array.isArray(data) ? data : [data];
 
-    // порожньо — пропускаємо
-    if (!cell || (typeof cell === "object" && Object.keys(cell).length === 0))
-      continue;
+    for (const lesson of lessonsList) {
+      if (isLessonVisible(lesson.format, group, isNumerator)) {
+        const teacherData = teachers[lesson.teacher];
+        const lessonName = lessonsNames[lesson.name];
+        const t = pairTimes(pair);
 
-    const t = pairTimes(pair);
+        out.push({
+          pair,
+          startMin: t.startMin,
+          endMin: t.endMin,
+          label: t.label,
 
-    out.push({
-      pair,
-      startMin: t.startMin,
-      endMin: t.endMin,
-      label: t.label,
-      title: cell.name ?? "Урок",
-      teacher: cell.teacher ?? "",
-      type: cell.type ?? "",
-      class: cell.class ?? "",
-      corps: cell.corps ?? "",
-      photo: cell.teacherPhoto ?? "",
-    });
+          title: lessonName || "Невідома дисципліна",
+          teacher: teacherData?.name || "",
+          photo: teacherData?.photo || "",
+
+          type: lesson.type,
+          class: lesson.location.auditory,
+          corps: lesson.location.corps,
+        });
+      }
+    }
   }
 
-  // впорядковуємо за часом початку
   out.sort((a, b) => a.startMin - b.startMin);
   return out;
 }
 
-/** допоміжне: дає найраніший старт дня (для побудови гріда) */
+export function pairTimes(pair: number) {
+  const times: Record<
+    number,
+    { startMin: number; endMin: number; label: string }
+  > = {
+    1: { startMin: 510, endMin: 590, label: "08:30 - 09:50" },
+    2: { startMin: 605, endMin: 685, label: "10:05 - 11:25" },
+    3: { startMin: 700, endMin: 780, label: "11:40 - 13:00" },
+    4: { startMin: 795, endMin: 875, label: "13:15 - 14:35" },
+    5: { startMin: 890, endMin: 970, label: "14:50 - 16:10" },
+    6: { startMin: 985, endMin: 1065, label: "16:25 - 17:45" },
+    7: { startMin: 1080, endMin: 1160, label: "18:00 - 19:20" },
+  };
+  return times[pair] || { startMin: 0, endMin: 0, label: "" };
+}
+
 export function getEarliestStartMin(
   lessons: NormalizedLesson[],
-  fallback = DAY_START_MIN
+  fallback = DAY_START_MIN,
 ) {
   return lessons.length
     ? Math.min(...lessons.map((l) => l.startMin))

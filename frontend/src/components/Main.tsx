@@ -1,16 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from "styled-components";
-import { END_DATE } from "../constants";
 import {
   getDayCode,
   type DayCode,
   getWeekType,
   nextDay,
-  nextWorkdayOrSelf,
   fmtDayNameAndDay,
-  addDays,
 } from "../utils/date";
 import Schedule from "./Schedule";
+import { END_WEEK } from "../constants";
 
 const toLocalDateOnly = (d: Date) => {
   const nd = new Date(d);
@@ -18,31 +16,28 @@ const toLocalDateOnly = (d: Date) => {
   return nd;
 };
 
-const inRangeHalfOpen = (x: Date, start: Date, end: Date) =>
-  x.getTime() >= start.getTime() && x.getTime() < end.getTime();
-
 type Props = {
   group: 0 | 1;
   currentWeek: Date;
+  classGroup: string;
 };
 
 const StyledWrapper = styled.div`
-  padding: 8px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  overflow: hidden;
+  overflow: auto;
 
-  @media screen and (max-width: 1600px) {
+  @media screen and (max-width: 2000px) {
     grid-template-columns: 1fr 1fr;
   }
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 1000px) {
     grid-template-columns: 1fr;
   }
 `;
 
-export default function Main({ group, currentWeek }: Props) {
+export default function Main({ group, currentWeek, classGroup }: Props) {
   const daysData: Array<{
     date: Date;
     code: DayCode;
@@ -51,22 +46,27 @@ export default function Main({ group, currentWeek }: Props) {
   }> = [];
 
   const weekStart = toLocalDateOnly(
-    currentWeek instanceof Date ? currentWeek : new Date(currentWeek as any)
+    currentWeek instanceof Date ? currentWeek : new Date(currentWeek as any),
   );
-  const weekEnd = toLocalDateOnly(addDays(weekStart, 7)); 
-  const today = toLocalDateOnly(new Date());
 
-  const base = inRangeHalfOpen(today, weekStart, weekEnd) ? today : weekStart;
-  let cursor = nextWorkdayOrSelf(base);
+  let cursor = new Date(weekStart);
 
-  while (daysData.length < 5 && cursor.getTime() <= END_DATE.getTime()) {
+  while (daysData.length < 5 && cursor.getTime() <= END_WEEK.getTime()) {
     const wd = cursor.getDay();
+
     if (wd !== 0 && wd !== 6) {
       const code = getDayCode(cursor);
       const weekType = getWeekType(cursor);
       const label = fmtDayNameAndDay(cursor);
-      daysData.push({ date: new Date(cursor), code, label, weekType });
+
+      daysData.push({
+        date: new Date(cursor),
+        code,
+        label,
+        weekType,
+      });
     }
+
     cursor = nextDay(cursor);
   }
 
@@ -74,6 +74,7 @@ export default function Main({ group, currentWeek }: Props) {
     <StyledWrapper>
       {daysData.map((d) => (
         <Schedule
+          classGroup={classGroup}
           key={d.date.toDateString()}
           day={d.code}
           group={group}

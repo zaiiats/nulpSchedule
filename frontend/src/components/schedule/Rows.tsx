@@ -1,5 +1,10 @@
 import type { DayCode } from "../../utils/date";
-import { TIME_STEP, STARTING_TIME, DAY_TIME } from "../../constants";
+import {
+  TIME_STEP,
+  STARTING_TIME,
+  DAY_TIME,
+  type DayOfWeek,
+} from "../../constants";
 import EmptyLesson from "../lessonCell/EmptyLesson";
 import { getDayLessons, pairTimes } from "../../utils/dayLessons";
 import { useEffect, useMemo, useState } from "react";
@@ -21,11 +26,18 @@ type Props = {
   group: 0 | 1;
   weekType: string | number;
   date: Date;
+  classGroup: string;
 };
 
-const HOUR_SPAN = 60 / TIME_STEP; // 12
+const HOUR_SPAN = 60 / TIME_STEP;
 
-export default function Rows({ date, day, group, weekType }: Props) {
+export default function Rows({
+  date,
+  day,
+  group,
+  weekType,
+  classGroup,
+}: Props) {
   const totalRows = Math.max(1, Math.ceil(DAY_TIME / TIME_STEP));
   const [now, setNow] = useState<Date>(new Date());
 
@@ -83,11 +95,16 @@ export default function Rows({ date, day, group, weekType }: Props) {
         style={{ gridRow: `${gridStart} / span ${span}` }}
       >
         {toHHMM(t)} - {toHHMM(t + 60)}
-      </HourCell>
+      </HourCell>,
     );
   }
 
-  const lessons = getDayLessons(day, group, weekType);
+  const lessons = getDayLessons(
+    classGroup as "305" | "306" | "307",
+    day as DayOfWeek,
+    group,
+    weekType,
+  );
   const byPair = new Map<number, (typeof lessons)[number]>();
   for (const l of lessons) byPair.set(l.pair, l);
 

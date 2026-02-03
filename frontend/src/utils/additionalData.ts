@@ -1,9 +1,7 @@
-// Локальні нотатки/статус для кожного уроку
-
 export type AdditionalData = {
-  urgent?: boolean;        // чи підсвічувати як термінове
-  notes?: string;          // довільні нотатки
-  withInfoIcon?: boolean;  // чи показувати іконку "і"
+  urgent?: boolean;        
+  notes?: string;         
+  withInfoIcon?: boolean; 
 };
 
 type Store = Record<string, AdditionalData>;
@@ -28,24 +26,21 @@ function saveStore(store: Store) {
   localStorage.setItem(LS_KEY, JSON.stringify(store));
 }
 
-// Унікальний ключ уроку: 2025-08-28|pair=3|group=1|week=A
 export function buildLessonKey(opts: {
-  ymd: string;        // формат YYYY-MM-DD
-  pair: number;       // № пари
-  group: 0 | 1;       // група
-  weekType: string | number; // тип тижня
+  ymd: string;       
+  pair: number;      
+  group: 0 | 1;     
+  weekType: string | number;
 }) {
   const { ymd, pair, group, weekType } = opts;
   return `${ymd}|pair=${pair}|group=${group}|week=${String(weekType)}`;
 }
 
-// Отримати дані (або дефолти)
 export function getAdditionalData(key: string): AdditionalData {
   const store = loadStore();
   return store[key] ?? { urgent: false, notes: "", withInfoIcon: false };
 }
 
-// Оновити/злити дані
 export function setAdditionalData(key: string, patch: Partial<AdditionalData>) {
   const store = loadStore();
   const prev = store[key] ?? {};
@@ -53,7 +48,6 @@ export function setAdditionalData(key: string, patch: Partial<AdditionalData>) {
   saveStore(store);
 }
 
-// За потреби: видалити або очистити все
 export function removeAdditionalData(key: string) {
   const store = loadStore();
   if (key in store) {

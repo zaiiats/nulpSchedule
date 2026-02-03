@@ -1,15 +1,11 @@
-// Типи
 export type DayCode = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
 
-// Константи
 export const MIN_PER_DAY = 24 * 60;
 
-// Базові утиліти/математика
 export function clamp(v: number, min: number, max: number) {
   return Math.max(min, Math.min(max, v));
 }
 
-// Операції з датами (додавання/наступний день/вихідні/наступний робочий)
 export function addDays(d: Date, days: number) {
   const nd = new Date(d);
   nd.setDate(nd.getDate() + days);
@@ -33,7 +29,6 @@ export function nextWorkdayOrSelf(d: Date) {
   return nd;
 }
 
-// Межі/кламп дати
 export function clampDate(d: Date, min: Date, max: Date) {
   const t = d.getTime();
   if (t < min.getTime()) return new Date(min);
@@ -41,7 +36,6 @@ export function clampDate(d: Date, min: Date, max: Date) {
   return d;
 }
 
-// Тиждень (ISO)
 export function startOfISOWeek(d: Date) {
   const nd = new Date(d);
   const day = nd.getDay() || 7;
@@ -67,13 +61,11 @@ export function getWeekType(
   return getISOWeek(date) % 2 === 1 ? labels.even : labels.odd;
 }
 
-// День тижня / коди
 export function getDayCode(date = new Date()): DayCode {
   const codes = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const;
   return codes[date.getDay()] as DayCode;
 }
 
-// Порівняння дат
 export const toYMD = (d: Date) => {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -87,7 +79,6 @@ export function isTodayDate(d: Date) {
   return isSameLocalDate(d, new Date());
 }
 
-// Форматування дат/часу
 export function fmtDayMonth(d: Date) {
   return d.toLocaleDateString("uk-UA", { day: "numeric", month: "short" });
 }

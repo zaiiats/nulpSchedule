@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from "styled-components";
 import type { CSSProperties } from "react";
 import { lazy, Suspense } from "react";
@@ -31,7 +32,9 @@ const Wrap = styled.div<{ $urgent?: boolean }>`
   align-items: stretch;
   overflow: hidden;
   min-height: 0;
-  transition: background 120ms ease, border-color 120ms ease;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease;
   height: 100%;
 
   background: ${({ $urgent }) =>
@@ -64,7 +67,8 @@ export default function Lesson({
   isUrgent,
 }: Props) {
   const typeKey = (type || "").toLowerCase();
-  const typeLabel = TYPE_LABELS[typeKey] ?? type;
+  const typeLabel =
+    (TYPE_LABELS[typeKey as keyof typeof TYPE_LABELS] as string) ?? type;
 
   return (
     <Wrap style={style} title={name} $urgent={isUrgent}>

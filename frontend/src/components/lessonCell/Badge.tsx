@@ -3,7 +3,7 @@ import { TYPE_COLORS } from "../../constants";
 
 const StyledBadge = styled.span<{ $kind: string }>`
   ${({ $kind }) => {
-    const c = TYPE_COLORS[$kind] ?? {
+    const c = TYPE_COLORS[$kind as keyof typeof TYPE_COLORS] ?? {
       bg: "rgba(148,163,184,0.12)",
       border: "rgba(148,163,184,0.35)",
       text: "var(--muted)",

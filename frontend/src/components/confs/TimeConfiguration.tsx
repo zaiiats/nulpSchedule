@@ -15,17 +15,7 @@ type Props = {
 };
 
 const Wrap = styled.div`
-  position: fixed;
-  bottom: 8px;
-  z-index: 1000;
-  left: 8px;
-  transform: none;
-
-  @media screen and (max-width: 800px) {
-    left: unset;
-    right: 50%;
-    transform: translateX(50%);
-  }
+  margin: 0 auto;
 `;
 
 const Bar = styled.div`
@@ -49,7 +39,10 @@ const Btn = styled.button<{ disabled?: boolean }>`
   padding: 6px 10px;
   font-size: 14px;
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
-  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease,
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    background 120ms ease,
     border-color 120ms ease;
 
   &:hover {
@@ -99,11 +92,11 @@ export default function TimeConfiguration({
 
   const canPrev = useMemo(
     () => startOfISOWeek(from).getTime() > startOfISOWeek(start).getTime(),
-    [from, start]
+    [from, start],
   );
   const canNext = useMemo(
     () => startOfISOWeek(from).getTime() < startOfISOWeek(end).getTime(),
-    [from, end]
+    [from, end],
   );
 
   const goPrev = () => canPrev && setCurrentWeek(addDays(from, -7));
