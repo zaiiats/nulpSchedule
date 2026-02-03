@@ -1,0 +1,95 @@
+{
+  "general": {
+    "total_searches": 15000,
+    "sessions": 12000,
+    "active_users": 8500,
+    "avg_session_duration": 145,
+    "voice_searches": 320,
+    "history_cleared": 50,
+    "avg_queries_per_user": 3.5,
+    "time_to_first_click": 2.1
+  },
+  "charts": {
+    "activity": [
+      { "searches": 100, "clicks": 50 },
+      { "searches": 120, "clicks": 60 }
+    ],
+    "hourly_activity": [
+      10, 5, 2, 1, 0, 0, 10, 50, 100, 150, 200, 180, 160, 150, 140, 130, 120,
+      100, 80, 60, 40, 30, 20, 15
+    ],
+    "search_depth": [5000, 2000, 500, 100],
+    "funnel": [
+      { "name": "Sessions", "value": 12000 },
+      { "name": "Queries", "value": 15000 },
+      { "name": "Clicks", "value": 8000 }
+    ],
+    "found_not_found": {
+      "found": 14500,
+      "empty": 500
+    },
+    "new_vs_returning": {
+      "new": 7000,
+      "returning": 1500
+    },
+    "tags": {
+      "queries": 15000,
+      "categories": 120,
+      "terms": [
+        { "name": "iphone", "type": "query", "count": 500 },
+        { "name": "electronics", "type": "category", "count": 200 }
+      ]
+    },
+    "predictions": {
+      "correct": 14000,
+      "corrected": 1000,
+      "items": [{ "from": "ipho", "to": "iphone", "count": 50 }]
+    },
+    "layout_fixes_extended": {
+      "ok": 14800,
+      "corrected": 200,
+      "items": [{ "from": "ghbdtn", "to": "привет", "count": 20 }]
+    },
+    "synonyms_extended": {
+      "synonyms": 300,
+      "direct": 14700,
+      "items": [{ "term": "mobile", "synonym_of": "phone", "count": 50 }]
+    },
+    "categories_click": [{ "name": "Laptops", "count": 120 }],
+    "brands_click": [{ "name": "Apple", "count": 300 }],
+    "device_types": [
+      { "name": "Mobile", "percent": 65 },
+      { "name": "Desktop", "percent": 30 },
+      { "name": "Tablet", "percent": 5 }
+    ],
+    "language_ratio": [
+      { "code": "en", "percent": 60 },
+      { "code": "uk", "percent": 40 }
+    ]
+  },
+  "lists": {
+    "price_filter": [{ "name": "100-200", "count": 50 }],
+    "brand_filter_category": [
+      { "name": "Nike", "category_name": "Shoes", "count": 100 }
+    ],
+    "cart_conversions": [{ "name": "Added to cart", "count": 500, "ctr": 5.2 }],
+    "history_clicks": [{ "name": "iphone 13", "count": 20 }],
+    "similar_products": [
+      {
+        "source": "product_1",
+        "items": [{ "name": "product_2", "score": 0.95 }]
+      }
+    ],
+    "brand_searches": [{ "name": "Samsung", "count": 400 }],
+    "promo_clicks": [{ "name": "Black Friday Banner", "count": 150 }],
+    "product_clicks": [{ "name": "MacBook Pro", "count": 50 }],
+    "popular_queries": [{ "name": "headphones", "count": 1000 }],
+    "query_refinements": [
+      { "name": "lapto -> laptop", "count": 10, "exit_rate": 0.5 }
+    ],
+    "popular_products_start": [{ "name": "AirPods", "count": 200 }],
+    "popular_queries_start": [{ "name": "sale", "count": 300 }],
+    "recent_failed": [{ "name": "abracadabra", "count": 1 }]
+  },
+  "key_words": [{ "name": "laptop", "searches": 500, "clicks": 250, "ctr": 50 }]
+}

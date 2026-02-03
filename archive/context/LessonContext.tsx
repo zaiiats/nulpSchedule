@@ -1,26 +1,28 @@
 import { createContext } from "react";
 
 export interface LessonModalPayload {
-  key: string; 
+  key: string;
   title?: string;
-  teacher?: string; 
+  teacher?: string;
   pair: number;
-  ymd: string; 
-  group: 0 | 1; 
+  ymd: string;
+  group: 0 | 1;
   weekType: string | number;
-  teacherPhoto?: string; 
+  teacherPhoto?: string;
   type?: "lab" | "practice" | "lection" | string;
-  classNum?: string; 
-  corps?: string; 
+  classNum?: string;
+  corps?: string;
   time?: string;
 }
 
 export interface LessonContextValue {
   openModal: (data: LessonModalPayload) => void;
   closeModal: () => void;
+  classGroup: string | null;
 }
 
 export const LessonContext = createContext<LessonContextValue>({
   openModal: () => {},
   closeModal: () => {},
+  classGroup: null,
 });

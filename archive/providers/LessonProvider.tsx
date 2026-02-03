@@ -5,7 +5,13 @@ import {
 } from "../context/LessonContext";
 import AdditionalModal from "../components/lessonModal/AdditionalModal";
 
-export default function LessonProvider({ children }: { children: ReactNode }) {
+export default function LessonProvider({
+  classGroup,
+  children,
+}: {
+  classGroup: string | null;
+  children: ReactNode;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [payload, setPayload] = useState<LessonModalPayload | null>(null);
 
@@ -20,9 +26,9 @@ export default function LessonProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <LessonContext.Provider value={{ openModal, closeModal }}>
+    <LessonContext.Provider value={{ openModal, closeModal, classGroup }}>
       {children}
-      <AdditionalModal open={isOpen} payload={payload} onClose={closeModal} />
+      {/* <AdditionalModal open={isOpen} payload={payload} onClose={closeModal} /> */}
     </LessonContext.Provider>
   );
 }
