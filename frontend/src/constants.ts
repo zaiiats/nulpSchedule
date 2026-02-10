@@ -176,16 +176,6 @@ export const lessonsData: LessonsData = {
     wed: {
       5: [
         {
-          name: "crypto",
-          teacher: "yuzevych",
-          type: "practice",
-          format: "top",
-          location: {
-            corps: "19",
-            auditory: "221",
-          },
-        },
-        {
           name: "hacking",
           teacher: "piskozub",
           type: "lection",
