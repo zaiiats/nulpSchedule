@@ -114,13 +114,6 @@ export const lessonsData: LessonsData = {
       },
       6: [
         {
-          name: "hacking",
-          teacher: "kolbasynskyi",
-          type: "lab",
-          format: "left",
-          location: { corps: "19", auditory: "210" },
-        },
-        {
           name: "infrastructure",
           teacher: "kret",
           type: "lab",
@@ -162,16 +155,28 @@ export const lessonsData: LessonsData = {
           },
         },
       ],
-      7: {
-        name: "crypto",
-        teacher: "yuzevych",
-        type: "lab",
-        format: "right",
-        location: {
-          corps: "19",
-          auditory: "210",
+      7: [
+        {
+          name: "hacking",
+          teacher: "kolbasynskyi",
+          type: "lab",
+          format: "left",
+          location: {
+            corps: "19",
+            auditory: "220",
+          },
         },
-      },
+        {
+          name: "crypto",
+          teacher: "yuzevych",
+          type: "lab",
+          format: "right",
+          location: {
+            corps: "19",
+            auditory: "210",
+          },
+        },
+      ],
     },
     wed: {
       5: [
@@ -229,16 +234,6 @@ export const lessonsData: LessonsData = {
             auditory: "221 а",
           },
         },
-        {
-          name: "hacking",
-          teacher: "kolbasynskyi",
-          type: "lab",
-          format: "bottomRight",
-          location: {
-            corps: "20",
-            auditory: "231",
-          },
-        },
       ],
     },
     thu: {
@@ -266,6 +261,26 @@ export const lessonsData: LessonsData = {
           },
         },
       ],
+      7: {
+        name: "crypto",
+        teacher: "yuzevych",
+        type: "practice",
+        format: "bottom",
+        location: {
+          corps: "19",
+          auditory: "212",
+        },
+      },
+      8: {
+        name: "hacking",
+        teacher: "kolbasynskyi",
+        type: "lab",
+        format: "bottomRight",
+        location: {
+          corps: "19",
+          auditory: "211",
+        },
+      },
     },
     fri: {
       5: [
