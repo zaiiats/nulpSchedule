@@ -94,15 +94,15 @@ const TeacherName = styled.div`
   line-height: 1.3;
 `;
 
-const Location = styled.div`
-  font-size: 11px;
-  color: var(--muted);
+// const Location = styled.div`
+//   font-size: 11px;
+//   color: var(--muted);
 
-  b {
-    color: var(--text);
-    font-weight: 600;
-  }
-`;
+//   b {
+//     color: var(--text);
+//     font-weight: 600;
+//   }
+// `;
 
 function initials(full?: string) {
   if (!full) return "—";
@@ -119,8 +119,8 @@ export default function Lesson({
   name,
   teacher,
   type,
-  classNum,
-  corps,
+  //classNum,
+  //corps,
   teacherPhoto,
   time,
   style,
@@ -129,17 +129,17 @@ export default function Lesson({
   const typeLabel =
     (TYPE_LABELS[typeKey as keyof typeof TYPE_LABELS] as string) ?? type;
 
-  const roomEl =
-    classNum || corps ? (
-      <Location>
-        ауд. {classNum ? <b>{classNum}</b> : "—"}
-        {corps ? (
-          <>
-            , корп. <b>{corps}</b>
-          </>
-        ) : null}
-      </Location>
-    ) : null;
+  // const roomEl =
+  //   classNum || corps ? (
+  //     <Location>
+  //       ауд. {classNum ? <b>{classNum}</b> : "—"}
+  //       {corps ? (
+  //         <>
+  //           , корп. <b>{corps}</b>
+  //         </>
+  //       ) : null}
+  //     </Location>
+  //   ) : null;
 
   return (
     <Wrap style={style}>
