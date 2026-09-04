@@ -114,7 +114,7 @@ Dark theme tokens
 
 /* Body base */
 body {
-  background: var(--bg);
+  background: black;
   color: var(--text);
   font-family: var(--font-sans);
 }

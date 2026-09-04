@@ -3,7 +3,7 @@ import {
   STARTING_TIME,
   DAY_TIME,
   type DayOfWeek,
-} from "../constants";
+} from "../utils/constants";
 import EmptyLesson from "./EmptyLesson";
 import { getDayLessons, pairTimes } from "../utils/dayLessons";
 import { toHHMM } from "../utils/date";
@@ -19,24 +19,33 @@ type Props = {
 const HOUR_SPAN = 60 / TIME_STEP;
 const ALL_PAIRS = [1, 2, 3, 4, 5, 6, 7];
 
-export const HOURS_COL = 84;
+export const HOURS_COL = 45;
 
 const Grid = styled.div<{ $rows: number }>`
+  padding: 0px 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
   position: relative;
   display: grid;
   grid-template-columns: ${HOURS_COL}px 1fr;
   grid-template-rows: repeat(${({ $rows }) => $rows}, minmax(0, 1fr));
-  column-gap: 6px;
-  row-gap: 2px;
+  column-gap: 4px;
   height: 100%;
   width: 100%;
 `;
 
 const HourCell = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
   grid-column: 1;
   align-self: start;
   justify-self: center;
-  padding: 2px 4px;
+  padding: 1px 1px;
   font-size: 11px;
   color: var(--muted);
   user-select: none;
@@ -57,7 +66,7 @@ export default function Rows({ day, group, weekType }: Props) {
         key={`hour-${t}`}
         style={{ gridRow: `${gridStart} / span ${span}` }}
       >
-        {toHHMM(t)} - {toHHMM(t + 60)}
+        <span>{toHHMM(t)}</span>
       </HourCell>,
     );
   }

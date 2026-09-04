@@ -5,7 +5,7 @@ import {
   type Lesson,
   type Format,
   type DayOfWeek,
-} from "../constants";
+} from "./constants";
 
 export type NormalizedLesson = {
   pair: number;
@@ -61,7 +61,7 @@ export function pairTimes(pair: number) {
     5: { startMin: 890, endMin: 970, label: "14:50 - 16:10" },
     6: { startMin: 985, endMin: 1065, label: "16:25 - 17:45" },
     7: { startMin: 1080, endMin: 1160, label: "18:00 - 19:20" },
-    8: { startMin: 1175, endMin: 1255, label: "19:35 - 20:55" }, 
+    8: { startMin: 1175, endMin: 1255, label: "19:35 - 20:55" },
   };
   return times[pair] || { startMin: 0, endMin: 0, label: "" };
 }

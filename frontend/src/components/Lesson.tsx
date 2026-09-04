@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import type { CSSProperties } from "react";
-import { TYPE_LABELS, TYPE_COLORS } from "../constants";
+import { TYPE_LABELS, TYPE_COLORS } from "../utils/constants";
 
 type Props = {
   name: string;
@@ -44,7 +44,7 @@ const Photo = styled.div<{ $src?: string }>`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  align-self:stretch;
+  align-self: stretch;
   gap: 4px;
   min-width: 0;
 `;
@@ -85,7 +85,7 @@ const LessonName = styled.div`
   font-size: 13px;
   font-weight: 600;
   line-height: 1.3;
-  height:100%;
+  height: 100%;
 `;
 
 const TeacherName = styled.div`
@@ -157,7 +157,7 @@ export default function Lesson({
 
         {teacher && <TeacherName>{teacher}</TeacherName>}
 
-        {roomEl}
+        {/*roomEl*/}
       </Content>
     </Wrap>
   );

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import type { DayOfWeek } from "../constants";
+import type { DayOfWeek } from "../utils/constants";
 import Rows from "./Rows";
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 const GridContainer = styled.main`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  gap: 12px;
   overflow: auto;
 
   @media screen and (max-width: 2000px) {
@@ -23,15 +23,10 @@ const GridContainer = styled.main`
 `;
 
 const DayCard = styled.div`
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  box-shadow: var(--shadow-md);
-  padding: 4px;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  height: 700px;
+  height: 600px;
   width: 100%;
 `;
 

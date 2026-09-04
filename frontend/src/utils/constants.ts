@@ -53,9 +53,10 @@ export type FullWeekSchedule = {
 };
 
 export const STARTING_TIME = 13 * 60;
-export const ENDING_TIME = 4 * 60;
+export const ENDING_TIME = 4 * 60 + 30;
 export const DAY_TIME = 24 * 60 - STARTING_TIME - ENDING_TIME;
 export const TIME_STEP = 5;
+export const BASE_WEEK_START = new Date("2026-09-07T00:00:00"); 
 
 export const TYPE_LABELS: Record<LessonType, string> = {
   lab: "Лаба",

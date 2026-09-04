@@ -1,11 +1,14 @@
 import styled from "styled-components";
 import type { Dispatch, SetStateAction } from "react";
+import { formatDateRange } from "../utils/date";
+
 
 type Props = {
   group: 0 | 1;
   setGroup: Dispatch<SetStateAction<0 | 1>>;
-  currentWeek: 0 | 1;
-  setCurrentWeek: Dispatch<SetStateAction<0 | 1>>;
+  currentDate: Date;
+  setCurrentDate: Dispatch<SetStateAction<Date>>;
+  weekType: 0 | 1;
 };
 
 const Bar = styled.header`
@@ -36,15 +39,26 @@ const Btn = styled.button`
     box-shadow: var(--shadow-md);
     border-color: #334155;
   }
-
   &:active {
     transform: translateY(0);
   }
-
   &:focus-visible {
     outline: none;
     box-shadow: 0 0 0 3px var(--ring);
   }
+`;
+
+const InfoWrap = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  white-space: nowrap;
+`;
+
+const DateStr = styled.span`
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
 `;
 
 const Badge = styled.span`
@@ -58,19 +72,17 @@ const Badge = styled.span`
   line-height: 1.4;
 `;
 
-const Text = styled.span`
-  font-size: 14px;
-  white-space: nowrap;
-`;
-
 export default function HeaderControls({
   group,
   setGroup,
-  currentWeek,
-  setCurrentWeek,
+  currentDate,
+  setCurrentDate,
+  weekType,
 }: Props) {
   const toggleGroup = () => setGroup((prev) => (prev === 0 ? 1 : 0));
-  const toggleWeek = () => setCurrentWeek((prev) => (prev === 0 ? 1 : 0));
+  
+  const goPrev = () => setCurrentDate((prev) => new Date(prev.getTime() - 7 * 24 * 60 * 60 * 1000));
+  const goNext = () => setCurrentDate((prev) => new Date(prev.getTime() + 7 * 24 * 60 * 60 * 1000));
 
   return (
     <Bar>
@@ -79,11 +91,18 @@ export default function HeaderControls({
       </Btn>
 
       <Section>
-        <Btn type="button" onClick={toggleWeek}>
-          Змінити
+        <Btn type="button" onClick={goPrev} style={{ padding: "6px 10px" }}>
+          &lt;
         </Btn>
-        <Badge>{currentWeek + 1}</Badge>
-        <Text>{currentWeek === 0 ? "Чисельник" : "Знаменник"}</Text>
+        
+        <InfoWrap>
+          <DateStr>{formatDateRange(currentDate)}</DateStr>
+          <Badge>{weekType === 0 ? "Чисельник" : "Знаменник"}</Badge>
+        </InfoWrap>
+
+        <Btn type="button" onClick={goNext} style={{ padding: "6px 10px" }}>
+          &gt;
+        </Btn>
       </Section>
     </Bar>
   );
