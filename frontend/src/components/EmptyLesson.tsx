@@ -8,7 +8,7 @@ const Box = styled.div`
   color: var(--muted);
   display: grid;
   place-items: center;
-  padding: 6px;
+  padding: 4px;
   font-size: 12px;
   user-select: none;
 `;
@@ -21,7 +21,7 @@ type Props = {
 
 export default function EmptyLesson({ pair, time, style }: Props) {
   return (
-    <Box style={style} title={"Нема пари"}>
+    <Box style={style}>
       {pair} пара - {time}
     </Box>
   );

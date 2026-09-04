@@ -9,7 +9,6 @@ function toHHMM(totalMinutes: number): string {
 }
 
 export const getLessonDuration = (lessonNum: number) => {
-  // lessonNum = номер пари (2..7 у твоєму випадку)
   const startingPos = startingTime + (lessonDuration + breakDuration) * (lessonNum - 1);
   const endingPos = startingPos + lessonDuration;
 

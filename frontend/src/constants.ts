@@ -1,24 +1,22 @@
 export const teachers = {
-  kret: { name: "Крет Т.Б.", photo: "kret.jpg" },
-  horpenyuk: { name: "Горпенюк А.Я.", photo: "horpenyuk.jpg" },
-  kolbasynskyi: { name: "Колбасинський І.В.", photo: "kolbasynskyi.jpg" },
-  piskozub: { name: "Піскозуб А.З.", photo: "piskozub.jpg" },
-  yuzevych: { name: "Юзевич В.М.", photo: "yuzevych.jpg" },
-  poberezhnyk: { name: "Побережник В.О.", photo: "poberezhnyk.jpg" },
-  kotlyarov: { name: "Котляров О.Ю.", photo: "kotlyarov.jpg" },
-  partyka: { name: "Партика А.І.", photo: "partyka.jpg" },
-  leskiv: { name: "Леськів Т.С.", photo: "leskiv.jpg" },
-  stefankiv: { name: "Стефанків", photo: "stefankiv.jpg" },
-  kolchenko: { name: "Кольченко В.В.", photo: "kolchenko.jpg" },
+  soroka: { name: "Сорока", photo: "soroka.png" },
+  zhuravchak: { name: "Журавчак Даниїл Юрійович", photo: "zhuravchak.png" },
+  besaha: { name: "Бесага Христина Степанівна", photo: "besaha.png" },
+  dzianyi: { name: "Дзяний Назарій Ростиславович", photo: "dzianyi.png" },
+  chervinka: { name: "Червінка Костянтин Андрійович", photo: "chervinka.png" },
+  susukaylo: { name: "Сусукайло Віталій Андрійович", photo: "susukaylo.png" },
+  karkavchuk: { name: "Каркавчук Валентин Ігорович", photo: "karkavchuk.png" },
+  vasylyshyn: { name: "Василишин Святослав Ігорович", photo: "vasylyshyn.png" },
 } as const;
 
 export const lessonsNames = {
-  infrastructure: "Безпека інфраструктури комп'ютерних мереж",
-  crypto: "Криптографічні системи та протоколи",
-  hacking: "Етичний хакінг в комп'ютерних системах і мережах",
-  web_security: "Безпека вебдодатків",
-  mobile_security: "Безпека мобільних технологій, частина 1",
-  web_prog: "Web-програмування",
+  incident_investigation:
+    "Технології розслідування інцидентів інформаційної безпеки",
+  network_security_tools:
+    "Інструменти мережевої безпеки та системи журналізаціі подій в КС",
+  software_testing: "Тестування програмного забезпечення",
+  network_os_security: "Безпека мережевих операційних систем",
+  software_security: "Безпека програмного забезпечення",
 } as const;
 
 export type LessonType = "lection" | "lab" | "practice";
@@ -54,22 +52,15 @@ export type FullWeekSchedule = {
   [key in DayOfWeek]: DaySchedule;
 };
 
-export type LessonsData = Record<"305" | "306" | "307", FullWeekSchedule>;
-
-export const STARTING_TIME = 8 * 60; // 08:00
-export const ENDING_TIME = 4 * 60; // 04:00
+export const STARTING_TIME = 13 * 60;
+export const ENDING_TIME = 4 * 60;
 export const DAY_TIME = 24 * 60 - STARTING_TIME - ENDING_TIME;
 export const TIME_STEP = 5;
-export const LESSON_DURATION = 80;
-export const BREAK_DURATION = 15;
-
-export const START_WEEK = new Date(2026, 1, 9); // Понеділок, 9 лютого
-export const END_WEEK = new Date(2026, 5, 29); // Понеділок, 29 червня
 
 export const TYPE_LABELS: Record<LessonType, string> = {
-  lab: "Лабка",
+  lab: "Лаба",
   practice: "Практ",
-  lection: "Лекція",
+  lection: "Лекц",
 };
 
 export const TYPE_COLORS: Record<
@@ -93,262 +84,143 @@ export const TYPE_COLORS: Record<
   },
 };
 
-export const lessonsData: LessonsData = {
-  306: {
-    mon: {
-      4: [
-        {
-          name: "infrastructure",
-          teacher: "kret",
-          type: "lab",
-          format: "left",
-          location: { corps: "20", auditory: "221 б" },
-        },
-      ],
-      5: {
-        name: "crypto",
-        teacher: "horpenyuk",
-        type: "lection",
-        format: "full",
-        location: { corps: "19", auditory: "202" },
-      },
-      6: [
-        {
-          name: "infrastructure",
-          teacher: "kret",
-          type: "lab",
-          format: "right",
-          location: { corps: "20", auditory: "221б" },
-        },
-      ],
-    },
-    tue: {
-      5: {
-        name: "infrastructure",
-        teacher: "piskozub",
-        type: "lection",
-        format: "full",
-        location: {
-          corps: "19",
-          auditory: "202",
-        },
-      },
-      6: [
-        {
-          name: "crypto",
-          teacher: "yuzevych",
-          type: "lab",
-          format: "left",
-          location: {
-            corps: "19",
-            auditory: "210",
-          },
-        },
-        {
-          name: "hacking",
-          teacher: "kolbasynskyi",
-          type: "lab",
-          format: "right",
-          location: {
-            corps: "19",
-            auditory: "220",
-          },
-        },
-      ],
-      7: [
-        {
-          name: "hacking",
-          teacher: "kolbasynskyi",
-          type: "lab",
-          format: "left",
-          location: {
-            corps: "19",
-            auditory: "220",
-          },
-        },
-        {
-          name: "crypto",
-          teacher: "yuzevych",
-          type: "lab",
-          format: "right",
-          location: {
-            corps: "19",
-            auditory: "210",
-          },
-        },
-      ],
-    },
-    wed: {
-      5: [
-        {
-          name: "hacking",
-          teacher: "piskozub",
-          type: "lection",
-          format: "bottom",
-          location: {
-            corps: "19",
-            auditory: "208",
-          },
-        },
-      ],
-      6: [
-        {
-          name: "web_security",
-          teacher: "poberezhnyk",
-          type: "lab",
-          format: "topLeft",
-          location: {
-            corps: "20",
-            auditory: "221 а",
-          },
-        },
-        {
-          name: "web_security",
-          teacher: "kotlyarov",
-          type: "lection",
-          format: "bottom",
-          location: {
-            corps: "19",
-            auditory: "208",
-          },
-        },
-      ],
-      7: [
-        {
-          name: "hacking",
-          teacher: "kolbasynskyi",
-          type: "lab",
-          format: "topLeft",
-          location: {
-            corps: "20",
-            auditory: "231",
-          },
-        },
-        {
-          name: "web_security",
-          teacher: "poberezhnyk",
-          type: "lab",
-          format: "topRight",
-          location: {
-            corps: "20",
-            auditory: "221 а",
-          },
-        },
-      ],
-    },
-    thu: {
-      5: [
-        {
-          name: "mobile_security",
-          teacher: "partyka",
-          type: "lection",
-          format: "bottom",
-          location: {
-            corps: "19",
-            auditory: "202",
-          },
-        },
-      ],
-      6: [
-        {
-          name: "web_prog",
-          teacher: "leskiv",
-          type: "lection",
-          format: "bottom",
-          location: {
-            corps: "19",
-            auditory: "202",
-          },
-        },
-      ],
-      7: {
-        name: "crypto",
-        teacher: "yuzevych",
-        type: "practice",
-        format: "bottom",
-        location: {
-          corps: "19",
-          auditory: "212",
-        },
-      },
-      8: {
-        name: "hacking",
-        teacher: "kolbasynskyi",
-        type: "lab",
-        format: "bottomRight",
-        location: {
-          corps: "19",
-          auditory: "211",
-        },
-      },
-    },
-    fri: {
-      5: [
-        {
-          name: "mobile_security",
-          teacher: "stefankiv",
-          type: "lab",
-          format: "topLeft",
-          location: {
-            corps: "20",
-            auditory: "221 б",
-          },
-        },
-        {
-          name: "web_prog",
-          teacher: "kolchenko",
-          type: "lab",
-          format: "bottomLeft",
-          location: {
-            corps: "20",
-            auditory: "227",
-          },
-        },
-      ],
-      6: [
-        {
-          name: "web_security",
-          teacher: "poberezhnyk",
-          type: "lab",
-          format: "left",
-          location: {
-            corps: "20",
-            auditory: "221 а",
-          },
-        },
-        {
-          name: "mobile_security",
-          teacher: "stefankiv",
-          type: "lab",
-          format: "topRight",
-          location: {
-            corps: "20",
-            auditory: "221 б",
-          },
-        },
-        {
-          name: "web_prog",
-          teacher: "kolchenko",
-          type: "lab",
-          format: "bottomRight",
-          location: {
-            corps: "20",
-            auditory: "227",
-          },
-        },
-      ],
-      7: {
-        name: "web_security",
-        teacher: "poberezhnyk",
+export const lessonsData: FullWeekSchedule = {
+  mon: {
+    5: [
+      {
+        name: "incident_investigation",
+        teacher: "soroka",
         type: "lab",
         format: "right",
-        location: {
-          corps: "20",
-          auditory: "221 а",
-        },
+        location: { corps: "-", auditory: "-" },
       },
+    ],
+    6: {
+      name: "network_security_tools",
+      teacher: "zhuravchak",
+      type: "practice",
+      format: "full",
+      location: { corps: "-", auditory: "-" },
     },
+    7: [
+      {
+        name: "incident_investigation",
+        teacher: "soroka",
+        type: "lab",
+        format: "left",
+        location: { corps: "-", auditory: "-" },
+      },
+      {
+        name: "software_testing",
+        teacher: "besaha",
+        type: "lab",
+        format: "right",
+        location: { corps: "-", auditory: "-" },
+      },
+    ],
   },
-  305: { mon: {}, tue: {}, wed: {}, thu: {}, fri: {} },
-  307: { mon: {}, tue: {}, wed: {}, thu: {}, fri: {} },
+  tue: {
+    5: {
+      name: "network_os_security",
+      teacher: "dzianyi",
+      type: "lection",
+      format: "full",
+      location: { corps: "-", auditory: "-" },
+    },
+    6: [
+      {
+        name: "software_testing",
+        teacher: "chervinka",
+        type: "lection",
+        format: "top",
+        location: { corps: "-", auditory: "-" },
+      },
+      {
+        name: "software_security",
+        teacher: "susukaylo",
+        type: "lection",
+        format: "bottom",
+        location: { corps: "-", auditory: "-" },
+      },
+    ],
+  },
+  wed: {
+    4: {
+      name: "network_security_tools",
+      teacher: "zhuravchak",
+      type: "practice",
+      format: "full",
+      location: { corps: "-", auditory: "-" },
+    },
+    5: [
+      {
+        name: "incident_investigation",
+        teacher: "soroka",
+        type: "lab",
+        format: "topLeft",
+        location: { corps: "-", auditory: "-" },
+      },
+      {
+        name: "incident_investigation",
+        teacher: "soroka",
+        type: "lab",
+        format: "bottomRight",
+        location: { corps: "-", auditory: "-" },
+      },
+    ],
+  },
+  thu: {
+    4: [
+      {
+        name: "software_security",
+        teacher: "karkavchuk",
+        type: "lab",
+        format: "right",
+        location: { corps: "-", auditory: "-" },
+      },
+    ],
+    5: {
+      name: "network_os_security",
+      teacher: "dzianyi",
+      type: "practice",
+      format: "full",
+      location: { corps: "-", auditory: "-" },
+    },
+    6: [
+      {
+        name: "software_security",
+        teacher: "karkavchuk",
+        type: "lab",
+        format: "left",
+        location: { corps: "-", auditory: "-" },
+      },
+    ],
+    7: [
+      {
+        name: "software_testing",
+        teacher: "besaha",
+        type: "lab",
+        format: "left",
+        location: { corps: "-", auditory: "-" },
+      },
+    ],
+  },
+  fri: {
+    5: {
+      name: "incident_investigation",
+      teacher: "vasylyshyn",
+      type: "lection",
+      format: "full",
+      location: { corps: "-", auditory: "-" },
+    },
+    6: [
+      {
+        name: "network_security_tools",
+        teacher: "zhuravchak",
+        type: "lection",
+        format: "top",
+        location: { corps: "-", auditory: "-" },
+      },
+    ],
+  },
 };
